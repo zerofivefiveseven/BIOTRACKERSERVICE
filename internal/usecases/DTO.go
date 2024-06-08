@@ -12,3 +12,9 @@ type CredentialsDTO struct {
 	Password string `json:"password"`
 	Username string `json:"username"`
 }
+
+type AddPlotDTO struct {
+	Name     string `json:"name"`
+	Username string `json:"username"`
+	Content  string `json:"content"`
+}
