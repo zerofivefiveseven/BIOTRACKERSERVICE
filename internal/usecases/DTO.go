@@ -14,7 +14,13 @@ type CredentialsDTO struct {
 }
 
 type AddPlotDTO struct {
-	Name     string `json:"name"`
-	Username string `json:"username"`
-	Content  string `json:"content"`
+	UserId  int    `json:"user_id"`
+	Name    string `json:"name"`
+	Content string `json:"content"`
+}
+
+type PlotDTO struct {
+	Id      int64  `json:"id"`
+	Name    string `json:"name"`
+	Content string `json:"content"`
 }

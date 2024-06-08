@@ -14,7 +14,6 @@ type (
 		UserAuth(ctx context.Context, token string) error
 	}
 	Repository interface {
-		AdminCredentials(ctx context.Context, username string) (string, error)
 		UserCredentials(ctx context.Context, username string) (string, error)
 	}
 )

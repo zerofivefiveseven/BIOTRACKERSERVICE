@@ -1,0 +1,20 @@
+version: "3.1"
+services:
+  db:
+    image: postgres:16.2-alpine3.19
+    hostname: ff-db
+    container_name: ff-db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+  biotracker:
+    build: .
+    container_name: bioTracker
+    hostname: bioTracker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db

@@ -46,10 +46,10 @@ func (a *Auth) UserAuth(ctx context.Context, token string) error {
 		return ErrUnauthorized
 	}
 	if err != nil {
-		return ErrInvalidToken
+		return ErrForbidden
 	}
 	if !tkn.Valid {
-		return ErrUnauthorized
+		return ErrInvalidToken
 	}
 	return nil
 }

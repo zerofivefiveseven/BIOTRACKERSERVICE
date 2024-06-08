@@ -78,6 +78,17 @@ func (q *Queries) CheckUserExists(ctx context.Context, email string) (bool, erro
 	return exists, err
 }
 
+const checkUserExistsById = `-- name: CheckUserExistsById :one
+select exists(select id from users_credentials where id = $1::int)
+`
+
+func (q *Queries) CheckUserExistsById(ctx context.Context, id int32) (bool, error) {
+	row := q.db.QueryRow(ctx, checkUserExistsById, id)
+	var exists bool
+	err := row.Scan(&exists)
+	return exists, err
+}
+
 const getPlotsByIds = `-- name: GetPlotsByIds :many
 SELECT id, user_id, name, content from plots
 where id = any ($1::INT[])
@@ -148,4 +159,16 @@ func (q *Queries) GetUserPlotsInfo(ctx context.Context, userID int32) ([]GetUser
 		return nil, err
 	}
 	return items, nil
+}
+
+const userCredentials = `-- name: UserCredentials :one
+select password from users_credentials
+where email = $1::text
+`
+
+func (q *Queries) UserCredentials(ctx context.Context, userEmail string) (string, error) {
+	row := q.db.QueryRow(ctx, userCredentials, userEmail)
+	var password string
+	err := row.Scan(&password)
+	return password, err
 }

@@ -4,8 +4,15 @@ INSERT INTO users_credentials (email, password)
 VALUES (@user_email::TEXT, @user_password::TEXT)
 RETURNING id;
 
+-- name: UserCredentials :one
+select password from users_credentials
+where email = @user_email::text;
+
 -- name: CheckUserExists :one
 SELECT EXISTS(SELECT email FROM users_credentials WHERE email = @email::TEXT);
+
+-- name: CheckUserExistsById :one
+select exists(select id from users_credentials where id = @id::int);
 
 -- name: AddUserInfo :exec
 INSERT INTO users_info (id, first_name, last_name, dateOfBirthday)
